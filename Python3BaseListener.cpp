@@ -105,7 +105,7 @@ void Python3BaseListener::enterStmt(Python3Parser::StmtContext* ctx) {
 	for (std::string method : declareted_methods_names) {
 		str_to_find = method;
 		str_to_find += "(";
-		if (ctx_txt.find(str_to_find) != -1 and ctx_txt.find("defmain(") == -1 and ctx_txt != "main()") {
+		if (ctx_txt.find(str_to_find) != -1 and ctx_txt.find("defmain(") == -1 and ctx_txt != "main()" and ctx_txt != "main()\n") {
 			if(ctx_txt.substr(ctx_txt.size() - 1,1)=="\n") ctx_txt.pop_back();// do not drop last symbol if not end of line
 			outputfilestr += ctx_txt;
 			outputfilestr += ";\n";

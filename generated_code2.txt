@@ -1,31 +1,17 @@
 #include <iostream>
 #include <vector>
 
-int factorial (int N){
-int res= 1;
-for(auto i= 0; i < N; i++){
-res*=i+1;
-}
-return res;
-}
-void  print_array (auto  arr, int N){
-for(auto i= 0; i < N; i++){
-std::cout <<arr[i]<< std::endl;
-
-}
-
-}
-void  main (){
+ int main () {
 std::vector<std::string> letters= {"a","b","c"};
 for(auto letter: letters){
 std::cout <<letter<< std::endl;
 
 }
-if ((8>12)and(3*5==15)){
+int b= -1;
+if ((b>12)and(3*5==15)){
 std::cout <<"OK"<< std::endl;
 
 }
-print_array(letters,3);
 int c= 0;
 for(auto i= 0; i < 12; i++){
 std::cout <<i<< std::endl;
@@ -35,5 +21,5 @@ for(auto idx= 0; idx < 4; idx++){
 std::cout <<"Hello"<< std::endl;
 
 }
-
+return 0;
 }

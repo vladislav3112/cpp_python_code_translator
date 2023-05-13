@@ -14,12 +14,13 @@ int main(int argc, const char* argv[]) {
     //you should call main func in .py as main() otherwise there won't be main func unless SAVE_AS_MAIN_ONLY=true
 
     bool SAVE_AS_MAIN_ONLY = true;
-
+    std::string INPUT_PATH = "test2.py";
+    std::string OUTPUT_PATH = "generated_code2.txt";
     //Create an input file stream
     //test2 for SAVE_AS_MAIN_ONLY=true
     //test for SAVE_AS_MAIN_ONLY=fasle
 
-    std::ifstream infile("test2.py");
+    std::ifstream infile(INPUT_PATH);
 
 
 
@@ -35,24 +36,21 @@ int main(int argc, const char* argv[]) {
     // Create a parser from the token stream
     Python3Parser parser(&tokens);    
 
-    std::cout << "Listener output" << std::endl;
     antlr4::tree::ParseTreeWalker walker;
     antlr4::ParserRuleContext* fileInput = parser.file_input();
     Python3BaseListener* listener = new Python3BaseListener();
     walker.walk(listener, fileInput);
 
-    std::cout << "Converted output" << std::endl;
-    std::cout << listener->outputfilestr << std::endl;
     
 
-    std::ofstream myfile("generated_code.txt");
+    std::ofstream myfile(OUTPUT_PATH);
     std::string main_head_start = "#include <iostream>\n#include <vector>\n\n int main () {\n";
     if (SAVE_AS_MAIN_ONLY) {
         if (myfile.is_open())
         {
             myfile << main_head_start;
             myfile << listener->outputfilestr;
-            myfile << "}\n";
+            myfile << "return 0;\n}\n";
             myfile.close();
         }
     }
