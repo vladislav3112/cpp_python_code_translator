@@ -10,8 +10,18 @@
 
 int main(int argc, const char* argv[]) {
     
-    // Create an input file stream
-    std::ifstream infile("test.py");
+    //variable that specifies should output be saved as main() func only or not:
+    //you should call main func in .py as main() otherwise there won't be main func unless SAVE_AS_MAIN_ONLY=true
+
+    bool SAVE_AS_MAIN_ONLY = true;
+
+    //Create an input file stream
+    //test2 for SAVE_AS_MAIN_ONLY=true
+    //test for SAVE_AS_MAIN_ONLY=fasle
+
+    std::ifstream infile("test2.py");
+
+
 
     // Create an ANTLR stream from the file stream
     antlr4::ANTLRInputStream input(infile);
@@ -25,13 +35,6 @@ int main(int argc, const char* argv[]) {
     // Create a parser from the token stream
     Python3Parser parser(&tokens);    
 
-    // Associate a visitor with the suite context
-    Python3BaseVisitor visitor;
- 
-    //std::cout << "Visitor output: " << std::endl;
-    //visitor.visitSuite(parser.suite());
-
-    // Associate a listener with the file_input context
     std::cout << "Listener output" << std::endl;
     antlr4::tree::ParseTreeWalker walker;
     antlr4::ParserRuleContext* fileInput = parser.file_input();
@@ -40,5 +43,26 @@ int main(int argc, const char* argv[]) {
 
     std::cout << "Converted output" << std::endl;
     std::cout << listener->outputfilestr << std::endl;
+    
+
+    std::ofstream myfile("generated_code.txt");
+    std::string main_head_start = "#include <iostream>\n#include <vector>\n\n int main () {\n";
+    if (SAVE_AS_MAIN_ONLY) {
+        if (myfile.is_open())
+        {
+            myfile << main_head_start;
+            myfile << listener->outputfilestr;
+            myfile << "}\n";
+            myfile.close();
+        }
+    }
+    else {
+        if (myfile.is_open())
+        {
+            myfile << "#include <iostream>\n#include <vector>\n\n";
+            myfile << listener->outputfilestr;
+            myfile.close();
+        }
+    }
     return 0;
 }

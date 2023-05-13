@@ -59,5 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="test.py" />
+    <None Include="test2.py" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@
 
 #include "antlr4-runtime.h"
 #include "Python3Listener.h"
-
+#include "vector"
 
 /**
  * This class provides an empty implementation of Python3Listener,
@@ -15,9 +15,10 @@
  */
 class  Python3BaseListener : public Python3Listener {
 public:
-  std::string outputfilestr = "#include <iostream>\n\n";
+  std::string outputfilestr = "";
   std::string buffered_expression = "";
   bool is_augassigment_was_before = false;
+  std::set <std::string> declareted_methods_names;
 
   virtual void enterSingle_input(Python3Parser::Single_inputContext * /*ctx*/) override { }
   virtual void exitSingle_input(Python3Parser::Single_inputContext * /*ctx*/) override { }
@@ -40,8 +41,8 @@ public:
   virtual void enterAsync_funcdef(Python3Parser::Async_funcdefContext * /*ctx*/) override { }
   virtual void exitAsync_funcdef(Python3Parser::Async_funcdefContext * /*ctx*/) override { }
 
-  virtual void enterFuncdef(Python3Parser::FuncdefContext * /*ctx*/) override { }
-  virtual void exitFuncdef(Python3Parser::FuncdefContext * /*ctx*/) override { }
+  virtual void enterFuncdef(Python3Parser::FuncdefContext* /*ctx*/) override;
+  virtual void exitFuncdef(Python3Parser::FuncdefContext* /*ctx*/) override;
 
   virtual void enterParameters(Python3Parser::ParametersContext * /*ctx*/) override { }
   virtual void exitParameters(Python3Parser::ParametersContext * /*ctx*/) override { }
@@ -94,7 +95,7 @@ public:
   virtual void enterContinue_stmt(Python3Parser::Continue_stmtContext * /*ctx*/) override { }
   virtual void exitContinue_stmt(Python3Parser::Continue_stmtContext * /*ctx*/) override { }
 
-  virtual void enterReturn_stmt(Python3Parser::Return_stmtContext * /*ctx*/) override { }
+  virtual void enterReturn_stmt(Python3Parser::Return_stmtContext* /*ctx*/) override;
   virtual void exitReturn_stmt(Python3Parser::Return_stmtContext * /*ctx*/) override { }
 
   virtual void enterYield_stmt(Python3Parser::Yield_stmtContext * /*ctx*/) override { }
